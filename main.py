@@ -3,6 +3,7 @@ from tkinter import *
 from tkinter import ttk
 from tkinter import messagebox
 from tkinter import filedialog as fd
+from PIL import ImageTk, Image
 
 cor0 = '#2e2d2b' # Preto
 cor1 = '#feffff' # Branco
@@ -44,5 +45,14 @@ frame_detalhes.grid(row=4, column=0, pady=0, padx=10, sticky=NSEW)
 
 frame_tabela = Frame(janela, width=850, height=200, bg= cor1)
 frame_tabela.grid(row=5, column=0, pady=0, padx=10, sticky=NSEW)
+
+
+# Trabalhando no frame logo------------
+logo = Image.open(r'./icons/student.png')
+logo = logo.resize((50,50))
+logo = ImageTk.PhotoImage(logo)
+label_logo = Label(frame_logo, image=logo, text='Cadastro de Alunos', width=850, compound=LEFT, relief=RAISED, anchor=NW, font=('Ivy 15 bold'), bg=cor6, fg=cor1)
+label_logo.place(x=0, y=0)
+
 
 janela.mainloop()
