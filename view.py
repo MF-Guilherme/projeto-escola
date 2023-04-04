@@ -11,15 +11,16 @@ except lite.Error as e:
 
 # Tabela de cursos ------------------------------------------
 
-# Criar cursos
+# Criar curso
 
-def criar_cursos(i):
+def criar_curso(i):
     with con:
         cursor = con.cursor()
         query = "INSERT INTO cursos (nome, duracao, preco) VALUES (?, ?, ?)"
         cursor.execute(query, i)
+        print("Curso criado com sucesso!")
 
-#criar_cursos(['Python', '2 semanas', 50.0])
+#criar_curso(['Python', '2 semanas', 50.0])
 
 # Ver todos os cursos
 
@@ -34,31 +35,82 @@ def ver_cursos():
     return lista
 
 
-#print(ver_cursos())
+# print(ver_cursos())
 
-# Atualizar cursos
+# Atualizar curso
 
-def atualizar_cursos(i):
+def atualizar_curso(i):
     with con:
         cursor = con.cursor()
         query = "UPDATE cursos SET nome=?, duracao=?, preco=? WHERE id = ?"
         cursor.execute(query, i)
+        print("Curso atualizado com sucesso!")
 
-# l = ['Python', '4 semanas', 75.8, 1]    
-# print(atualizar_cursos(l))
+# l = ['Python', '4 semanas', 75.8, 2]    
+# print(atualizar_curso(l))
 
 # print(ver_cursos())
 
 
-# Deletar cursos
+# Deletar curso
 
-def deletar_cursos(id):
+def deletar_curso(id):
     with con:
         cursor = con.cursor()
         query = "DELETE from cursos WHERE id = ?"
         cursor.execute(query, id)
+        print("Curso deletado com sucesso")
 
 #l = [1]    
 
-#deletar_cursos(l)
+#deletar_curso(l)
 #print(ver_cursos())
+
+
+# Tabela de Turmas -------------------------------------------------------
+
+# Criar turmas
+def criar_turma(i):
+    with con:
+        cursor = con.cursor()
+        query = "INSERT INTO turmas (nome, curso_nome, data_inicio) VALUES (?, ?, ?)"
+        cursor.execute(query, i)
+        print("Turma criada com sucesso")
+
+# l = ["2A", "Java", "2023-10-29"]
+# print(criar_turma(l))
+
+# Ver todas as turmas
+def ver_turmas():
+    lista = []
+    with con:
+        cursor = con.cursor()
+        cursor.execute("SELECT * FROM turmas")
+        linha = cursor.fetchall()
+        for i in linha:
+            lista.append(i)
+    return lista
+
+print(ver_turmas())
+
+# Atualizar turma
+def atualizar_turma(i):
+    with con:
+        cursor = con.cursor()
+        query = "UPDATE turmas SET nome=?, curso_nome=?, data_inicio=? WHERE id=?"
+        cursor.execute(query,i)
+        print("Dados atualizados com sucesso!")
+
+# l = ["2B", "Python", "2023-10-29", 2]
+# print(atualizar_turma(l))
+
+# Deletar turma
+def deletar_turma(id):
+    with con:
+        cursor = con.cursor()
+        query = "DELETE FROM turmas WHERE id=?"
+        cursor.execute(query, id)
+        print("Turma deletada com sucesso")
+
+# l = [2]
+# print(deletar_turma(l))
