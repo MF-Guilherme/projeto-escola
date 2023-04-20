@@ -54,5 +54,77 @@ logo = ImageTk.PhotoImage(logo)
 label_logo = Label(frame_logo, image=logo, text='Cadastro de Alunos', width=850, compound=LEFT, relief=RAISED, anchor=NW, font=('Ivy 15 bold'), bg=cor6, fg=cor1)
 label_logo.place(x=0, y=0)
 
+# função para cadastrar alunos
+def alunos():
+    print('Aluno')
+
+
+# Função para adicionar Cursos e Turmas
+def adicionar():
+    print('Cursos e turmas')
+
+
+# Função para salvar
+def salvar():
+    print('Salvar')
+
+
+# Função de controle ------------------------
+def control(i):
+    # cadastro de aluno
+    if i == 'cadastro':
+        for widget in frame_detalhes.winfo_children():
+            widget.destroy()
+
+        for widget in frame_tabela.winfo_children():
+            widget.destroy()
+        
+        # chamando a função aluno
+        alunos()
+    elif i == 'adicionar':
+        for widget in frame_detalhes.winfo_children():
+            widget.destroy()
+
+        for widget in frame_tabela.winfo_children():
+            widget.destroy()
+        
+        # chamando a função adicionar
+        adicionar()
+    else:
+        for widget in frame_detalhes.winfo_children():
+            widget.destroy()
+
+        for widget in frame_tabela.winfo_children():
+            widget.destroy()
+        
+        # chamando a função salvar
+        salvar()
+
+
+
+# Criando botões
+
+#botão de cadastro
+app_img_cadastro = Image.open(r'./icons/add.png')
+app_img_cadastro = app_img_cadastro.resize((18,18))
+app_img_cadastro = ImageTk.PhotoImage(app_img_cadastro)
+btn_cadastro = Button(frame_dados, command=lambda:control('cadastro'), image=app_img_cadastro, text='Cadastro', width=100, compound=LEFT, overrelief=RIDGE, font=('Ivy 11'), bg=cor1, fg=cor0)
+btn_cadastro.place(x=10, y=30)
+
+#botão de adicionar
+app_img_adicionar = Image.open(r'./icons/add.png')
+app_img_adicionar = app_img_adicionar.resize((18,18))
+app_img_adicionar = ImageTk.PhotoImage(app_img_adicionar)
+btn_adicionar = Button(frame_dados, command=lambda:control('adicionar'), image=app_img_cadastro, text='Adicionar', width=100, compound=LEFT, overrelief=RIDGE, font=('Ivy 11'), bg=cor1, fg=cor0)
+btn_adicionar.place(x=123, y=30)
+
+#botão de cadastro
+app_img_salvar = Image.open(r'./icons/save.png')
+app_img_salvar = app_img_salvar.resize((18,18))
+app_img_salvar = ImageTk.PhotoImage(app_img_salvar)
+btn_salvar = Button(frame_dados, command=lambda:control('salvar'), image=app_img_salvar, text='Salvar', width=100, compound=LEFT, overrelief=RIDGE, font=('Ivy 11'), bg=cor1, fg=cor0)
+btn_salvar.place(x=236, y=30)
+
+
 
 janela.mainloop()
