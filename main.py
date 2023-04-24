@@ -61,7 +61,82 @@ def alunos():
 
 # Função para adicionar Cursos e Turmas
 def adicionar():
-    print('Cursos e turmas')
+    # Criando frames para tabelas
+    frame_tabela_curso = Frame(frame_tabela, width=300, height=200, bg=cor1)
+    frame_tabela_curso.grid(row=0, column=0, pady=0, padx=0, sticky=NSEW)
+
+    frame_tabela_linha = Frame(frame_tabela, width=30, height=200, bg=cor3)
+    frame_tabela_linha.grid(row=0, column=1, pady=0, padx=10, sticky=NSEW)
+
+    frame_tabela_turma = Frame(frame_tabela, width=300, height=200, bg=cor4)
+    frame_tabela_turma.grid(row=0, column=2, pady=0, padx=10, sticky=NSEW)
+
+    l_nome = Label(frame_detalhes, text="Nome do curso *", height=1, anchor=NW, font=('Ivy 10'), bg=cor1, fg=cor4)
+    l_nome.place(x=4, y=10)
+    e_nome_curso = Entry(frame_detalhes, width=35, justify=LEFT, relief=SOLID)
+    e_nome_curso.place(x=7, y=40)
+
+    l_duracao = Label(frame_detalhes, text="Duração *", height=1, anchor=NW, font=('Ivy 10'), bg=cor1, fg=cor4)
+    l_duracao.place(x=4, y=70)
+    e_duracao = Entry(frame_detalhes, width=20, justify=LEFT, relief=SOLID)
+    e_duracao.place(x=7, y=100)
+
+    l_preco = Label(frame_detalhes, text="Preço *", height=1, anchor=NW, font=('Ivy 10'), bg=cor1, fg=cor4)
+    l_preco.place(x=4, y=130)
+    e_preco = Entry(frame_detalhes, width=10, justify=LEFT, relief=SOLID)
+    e_preco.place(x=7, y=160)
+
+    botao_carregar = Button(frame_detalhes, anchor=CENTER, text='SALVAR', width=10, overrelief=RIDGE, font=('Ivy 7 bold'), bg=cor3, fg=cor1)
+    botao_carregar.place(x=107, y=160)
+
+    botao_atualizar = Button(frame_detalhes, anchor=CENTER, text='ATUALIZAR', width=10, overrelief=RIDGE, font=('Ivy 7 bold'), bg=cor6, fg=cor1)
+    botao_atualizar.place(x=187, y=160)
+
+    botao_deletar = Button(frame_detalhes, anchor=CENTER, text='DELETAR', width=10, overrelief=RIDGE, font=('Ivy 7 bold'), bg=cor7, fg=cor1)
+    botao_deletar.place(x=267, y=160)
+
+    # Tabela de Cursos
+    def mostrar_cursos():
+        app_nome = Label(frame_tabela_curso, text="Tabela de Cursos", height=1, pady=0, padx=0, relief=FLAT, anchor=NW, font=('Ivy 10 bold'), bg=cor1, fg=cor4)
+        app_nome.grid(row=0, column=0, padx=0, pady=10, sticky=NSEW)
+
+        # creating a treeview with dual scroolbars
+        list_header = ['ID', 'Curso', 'Duração', 'Preço']
+
+        df_list = []
+
+        global tree_curso
+
+        tree_curso = ttk.Treeview(frame_tabela_curso, selectmode='extended', columns=list_header, show='headings')
+        # vertical scrollbar
+        vsb = ttk.Scrollbar(frame_tabela_curso, orient='vertical', command=tree_curso.yview)
+        # horizontal scrollbar        
+        hsb = ttk.Scrollbar(frame_tabela_curso, orient='horizontal', command=tree_curso.xview)
+
+        tree_curso.configure(yscrollcommand=vsb.set, xscrollcommand=hsb.set)
+
+        tree_curso.grid(column=0, row=1, sticky=NSEW)
+        vsb.grid(column=1, row=1, sticky=NS)
+        hsb.grid(column=0, row=2, sticky=EW)
+        frame_tabela_curso.grid_rowconfigure(0, weight=12)
+
+        hd = ['nw', 'nw', 'e', 'e']
+        h = [30, 150, 80, 60]
+        n = 0
+
+        for col in list_header:
+            tree_curso.heading(col, text=col.title(), anchor=NW)
+            # adjust the column's width to the header string
+            tree_curso.column(col, width=h[n], anchor=hd[n])
+
+            n+=1
+        
+        for item in df_list:
+            tree_curso.insert('end', values=item)
+        
+    mostrar_cursos()
+
+
 
 
 # Função para salvar
