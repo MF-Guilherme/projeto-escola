@@ -58,8 +58,52 @@ label_logo.place(x=0, y=0)
 
 # função para cadastrar alunos
 def alunos():
-    print('Aluno')
+    
+    l_nome = Label(frame_detalhes, text="Nome *", height=1, anchor=NW, font=('Ivy 10'), bg=cor1, fg=cor4)
+    l_nome.place(x=4, y=10)
+    e_nome = Entry(frame_detalhes, width=45, justify=LEFT, relief=SOLID)
+    e_nome.place(x=7, y=40)
 
+    l_email = Label(frame_detalhes, text="E-mail *", height=1, anchor=NW, font=('Ivy 10'), bg=cor1, fg=cor4)
+    l_email.place(x=4, y=70)
+    e_email = Entry(frame_detalhes, width=45, justify=LEFT, relief=SOLID)
+    e_email.place(x=7, y=100)
+
+    l_telefone = Label(frame_detalhes, text="Telefone *", height=1, anchor=NW, font=('Ivy 10'), bg=cor1, fg=cor4)
+    l_telefone.place(x=4, y=130)
+    e_telefone = Entry(frame_detalhes, width=20, justify=LEFT, relief=SOLID)
+    e_telefone.place(x=7, y=160)
+    
+    l_sexo = Label(frame_detalhes, text="Sexo *", height=1, anchor=NW, font=('Ivy 10'), bg=cor1, fg=cor4)
+    l_sexo.place(x=190, y=130)
+
+    cb_sexo = ttk.Combobox(frame_detalhes, width=12, font=('Ivy 8 bold'))
+    cb_sexo['values'] = ('Masculino', 'Feminino')
+    cb_sexo.place(x=190, y=160)
+
+    l_data_nascimento = Label(frame_detalhes, text='Data de Nascimento *', height=1, anchor=NW, font=('Ivy 10'), bg=cor1, fg=cor4)
+    l_data_nascimento.place(x=446, y=10)
+    data_nacimento = DateEntry(frame_detalhes, width=18, background = 'darkblue', foreground='white', borderwidth=2, year=2023 )
+    data_nacimento.place(x=450, y=40)
+
+    l_cpf = Label(frame_detalhes, text="CPF *", height=1, anchor=NW, font=('Ivy 10'), bg=cor1, fg=cor4)
+    l_cpf.place(x=446, y=70)
+    e_cpf = Entry(frame_detalhes, width=20, justify=LEFT, relief=SOLID)
+    e_cpf.place(x=450, y=100)
+
+    # Pegando as turmas
+    turmas = ['Python Turma A', 'Python Turma B']
+    turma = []
+
+    for i in turmas:
+        turma.append(i)
+
+    l_curso = Label(frame_detalhes, text="Turma *", height=1, anchor=NW, font=('Ivy 10'), bg=cor1, fg=cor4)
+    l_curso.place(x=446, y=130)    
+    cb_turma = ttk.Combobox(frame_detalhes, width=18, font=('Ivy 8 bold'))
+    cb_turma['values'] = (turma)
+    cb_turma.place(x=450, y=160)
+    
 
 # Função para adicionar Cursos e Turmas
 def adicionar():
@@ -235,7 +279,7 @@ def salvar():
     print('Salvar')
 
 
-# Função de controle ------------------------
+# Função de controle --------------------------------
 def control(i):
     # cadastro de aluno
     if i == 'cadastro':
@@ -267,8 +311,7 @@ def control(i):
         salvar()
 
 
-
-# Criando botões
+# Criando botões -------------------------------------
 
 #botão de cadastro
 app_img_cadastro = Image.open(r'./icons/add.png')
@@ -292,5 +335,5 @@ btn_salvar = Button(frame_dados, command=lambda:control('salvar'), image=app_img
 btn_salvar.place(x=236, y=30)
 
 
-
+alunos()
 janela.mainloop()
