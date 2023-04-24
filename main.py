@@ -4,6 +4,8 @@ from tkinter import ttk
 from tkinter import messagebox
 from tkinter import filedialog as fd
 from PIL import ImageTk, Image
+from tkcalendar import Calendar, DateEntry
+from datetime import date
 
 cor0 = '#2e2d2b' # Preto
 cor1 = '#feffff' # Branco
@@ -63,13 +65,15 @@ def alunos():
 def adicionar():
     # Criando frames para tabelas
     frame_tabela_curso = Frame(frame_tabela, width=300, height=200, bg=cor1)
-    frame_tabela_curso.grid(row=0, column=0, pady=0, padx=0, sticky=NSEW)
+    frame_tabela_curso.grid(row=0, column=0, pady=0, padx=10, sticky=NSEW)
 
-    frame_tabela_linha = Frame(frame_tabela, width=30, height=200, bg=cor3)
+    frame_tabela_linha = Frame(frame_tabela, width=30, height=200, bg=cor1)
     frame_tabela_linha.grid(row=0, column=1, pady=0, padx=10, sticky=NSEW)
 
-    frame_tabela_turma = Frame(frame_tabela, width=300, height=200, bg=cor4)
+    frame_tabela_turma = Frame(frame_tabela, width=300, height=200, bg=cor1)
     frame_tabela_turma.grid(row=0, column=2, pady=0, padx=10, sticky=NSEW)
+
+    # Detalhes do curso ---------------------------------------------------------------
 
     l_nome = Label(frame_detalhes, text="Nome do curso *", height=1, anchor=NW, font=('Ivy 10'), bg=cor1, fg=cor4)
     l_nome.place(x=4, y=10)
@@ -136,7 +140,94 @@ def adicionar():
         
     mostrar_cursos()
 
+    # linha separatória parte de cima----------------------
 
+    l_linha = Label(frame_detalhes, relief=GROOVE, text='h', width=1, height=100, anchor=NW, font=('Ivy 1'), bg=cor0, fg=cor0)
+    l_linha.place(x=374, y=10)
+    l_linha = Label(frame_detalhes, relief=GROOVE, text='h', width=1, height=100, anchor=NW, font=('Ivy 1'), bg=cor1, fg=cor0)
+    l_linha.place(x=372, y=10)
+
+    # linha separatória parte de baixo (tabela) ----------------------
+
+    l_linha = Label(frame_tabela_linha, relief=GROOVE, text='h', width=1, height=140, anchor=NW, font=('Ivy 1'), bg=cor0, fg=cor0)
+    l_linha.place(x=6, y=10)
+    l_linha = Label(frame_tabela_linha, relief=GROOVE, text='h', width=1, height=140, anchor=NW, font=('Ivy 1'), bg=cor1, fg=cor0)
+    l_linha.place(x=4, y=10)
+
+    # detalhes da turma -----------------------------------------------
+
+    l_nome = Label(frame_detalhes, text="Nome da Turma *", height=1, anchor=NW, font=('Ivy 10'), bg=cor1, fg=cor4)
+    l_nome.place(x=404, y=10)
+    e_nome_turma = Entry(frame_detalhes, width=35, justify=LEFT, relief=SOLID)
+    e_nome_turma.place(x=407, y=40)
+
+    l_curso = Label(frame_detalhes, text="Curso *", height=1, anchor=NW, font=('Ivy 10'), bg=cor1, fg=cor4)
+    l_curso.place(x=404, y=70)
+    
+    # Pegando os cursos
+    cursos = ['curso 1', 'curso 2']
+    curso = []
+
+    for i in cursos:
+        curso.append(i)
+    
+    cb_curso = ttk.Combobox(frame_detalhes, width=20, font=('Ivy 8 bold'))
+    cb_curso['values'] = (curso)
+    cb_curso.place(x=407, y=100)
+
+    l_data_inicio = Label(frame_detalhes, text='Data de Início', height=1, anchor=NW, font=('Ivy 10'), bg=cor1, fg=cor4)
+    l_data_inicio.place(x=406, y=130)
+    data_inicio = DateEntry(frame_detalhes, width=10, background = 'darkblue', foreground='white', borderwidth=2, year=2023 )
+    data_inicio.place(x=407, y=160)
+
+    botao_carregar = Button(frame_detalhes, anchor=CENTER, text='SALVAR', width=10, overrelief=RIDGE, font=('Ivy 7 bold'), bg=cor3, fg=cor1)
+    botao_carregar.place(x=507, y=160)
+
+    botao_atualizar = Button(frame_detalhes, anchor=CENTER, text='ATUALIZAR', width=10, overrelief=RIDGE, font=('Ivy 7 bold'), bg=cor6, fg=cor1)
+    botao_atualizar.place(x=587, y=160)
+
+    botao_deletar = Button(frame_detalhes, anchor=CENTER, text='DELETAR', width=10, overrelief=RIDGE, font=('Ivy 7 bold'), bg=cor7, fg=cor1)
+    botao_deletar.place(x=667, y=160)
+
+    def mostrar_turmas():
+        app_nome = Label(frame_tabela_turma, text="Tabela de Turmas", height=1, pady=0, padx=0, relief=FLAT, anchor=NW, font=('Ivy 10 bold'), bg=cor1, fg=cor4)
+        app_nome.grid(row=0, column=0, padx=0, pady=10, sticky=NSEW)
+
+        # creating a treeview with dual scroolbars
+        list_header = ['ID', 'Nome da Turma', 'Curso', 'Início']
+
+        df_list = []
+
+        global tree_turma
+
+        tree_turma = ttk.Treeview(frame_tabela_turma, selectmode='extended', columns=list_header, show='headings')
+        # vertical scrollbar
+        vsb = ttk.Scrollbar(frame_tabela_turma, orient='vertical', command=tree_turma.yview)
+        # horizontal scrollbar        
+        hsb = ttk.Scrollbar(frame_tabela_turma, orient='horizontal', command=tree_turma.xview)
+
+        tree_turma.configure(yscrollcommand=vsb.set, xscrollcommand=hsb.set)
+
+        tree_turma.grid(column=0, row=1, sticky=NSEW)
+        vsb.grid(column=1, row=1, sticky=NS)
+        hsb.grid(column=0, row=2, sticky=EW)
+        frame_tabela_turma.grid_rowconfigure(0, weight=12)
+
+        hd = ['nw', 'nw', 'e', 'e']
+        h = [30, 130, 150, 80]
+        n = 0
+
+        for col in list_header:
+            tree_turma.heading(col, text=col.title(), anchor=NW)
+            # adjust the column's width to the header string
+            tree_turma.column(col, width=h[n], anchor=hd[n])
+
+            n+=1
+        
+        for item in df_list:
+            tree_turma.insert('end', values=item)
+        
+    mostrar_turmas()
 
 
 # Função para salvar
